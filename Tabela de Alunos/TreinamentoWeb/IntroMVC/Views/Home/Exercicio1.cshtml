@@ -1,0 +1,58 @@
+﻿@{
+    Layout = null; // Para não utilizar um layout mestre
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Lista de Alunos</h2>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Sobrenome</th>
+                    <th>Idade</th>
+                </tr>
+            </thead>
+            <tbody id="alunos-list">
+                <!-- Os dados dos alunos serão inseridos aqui dinamicamente -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+    $(document).ready(function () {
+        // Função para fazer a requisição GET e preencher a tabela
+        function listarAlunos() {
+            $.get('@Url.Action("ListarAlunos", "Home")', function (data) {
+                // Limpa a tabela
+                $('#alunos-list').empty();
+
+                // Preenche a tabela com os dados dos alunos
+                $.each(data, function (index, aluno) {
+                    $('#alunos-list').append(`
+                        <tr>
+                            <td>${aluno.Nome}</td>
+                            <td>${aluno.Sobrenome}</td>
+                            <td>${aluno.Idade}</td>
+                        </tr>
+                    `);
+                });
+            });
+        }
+
+        // Chama a função para listar os alunos quando a página carregar
+        listarAlunos();
+    });
+    </script>
+
+</body>
+</html>

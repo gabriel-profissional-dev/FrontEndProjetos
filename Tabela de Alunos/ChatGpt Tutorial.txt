@@ -1,0 +1,57 @@
+Entendi que você precisa criar uma tabela HTML utilizando Bootstrap 3 e jQuery para listar alunos obtidos através de uma requisição GET. Vou lhe dar um exemplo de como você pode fazer isso seguindo os requisitos que você mencionou:
+
+Certifique-se de que você tenha o Bootstrap 3 e o jQuery corretamente incluídos em seus arquivos HTML. Você pode fazer isso adicionando os seguintes links em sua seção <head>:
+html
+Copy code
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+Crie a tabela no seu arquivo HTML (/Views/Home/Exercicio1.cshtml) com uma coluna de 24 espaços:
+html
+Copy code
+<div class="container">
+  <h2>Lista de Alunos</h2>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Nome</th>
+        <th>Sobrenome</th>
+        <th>Idade</th>
+      </tr>
+    </thead>
+    <tbody id="alunos-list">
+      <!-- Os dados dos alunos serão inseridos aqui dinamicamente -->
+    </tbody>
+  </table>
+</div>
+Crie um arquivo JavaScript (/Scripts/projeto/exercicio1/exercicio1.js) para fazer a requisição GET e preencher a tabela:
+javascript
+Copy code
+$(document).ready(function () {
+  // Função para fazer a requisição GET e preencher a tabela
+  function listarAlunos() {
+    $.get('@Url.Action("ListarAlunos", "Home")', function (data) {
+      // Limpa a tabela
+      $('#alunos-list').empty();
+
+      // Preenche a tabela com os dados dos alunos
+      $.each(data, function (index, aluno) {
+        $('#alunos-list').append(`
+          <tr>
+            <td>${aluno.Nome}</td>
+            <td>${aluno.Sobrenome}</td>
+            <td>${aluno.Idade}</td>
+          </tr>
+        `);
+      });
+    });
+  }
+
+  // Chama a função para listar os alunos quando a página carregar
+  listarAlunos();
+});
+Certifique-se de que a URL @Url.Action("ListarAlunos", "Home") corresponda ao endpoint correto em seu servidor que retorna os dados dos alunos.
+
+Lembre-se de ajustar os caminhos dos arquivos e URLs de acordo com a estrutura do seu projeto. Certifique-se também de seguir o padrão de desenvolvimento adotado no projeto em /Views/Home/Index.cshtml e /Scripts/projeto/home/home.js.
+
+Com essas etapas, você deve ser capaz de criar uma tabela que lista os alunos obtidos através de uma requisição GET, atendendo aos requisitos mencionados. Certifique-se de que seu servidor web IIS esteja configurado corretamente para executar a aplicação.
